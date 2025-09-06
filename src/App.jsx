@@ -9,7 +9,6 @@ export default function App() {
 
   console.log("Countries array:", countries);
 
-  // Fetch countries
   useEffect(() => {
     async function fetchCountries() {
       try {
@@ -26,7 +25,6 @@ export default function App() {
     fetchCountries();
   }, []);
 
-  // Fetch weather for selected country
   useEffect(() => {
     async function fetchWeather() {
       if (!selected || !selected.capital?.[0]) return;
@@ -58,19 +56,16 @@ export default function App() {
     fetchWeather();
   }, [selected]);
 
-  // Filter countries based on search
   const filteredCountries = countries.filter((c) =>
     c.name?.common?.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start bg-gradient-to-br from-blue-50 via-white to-blue-50 p-6">
-      {/* Header */}
       <h1 className="text-4xl font-bold text-center text-blue-900 mt-12 mb-6">
         🌎 Explore the World 🌎
       </h1>
 
-      {/* Search form */}
       <div className="w-full flex justify-center mb-6">
         <form onSubmit={(e) => e.preventDefault()} className="w-full max-w-md">
           <input
@@ -83,7 +78,6 @@ export default function App() {
         </form>
       </div>
 
-      {/* Country list (only show when searching and not selected) */}
       {search && !selected && filteredCountries.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full max-w-5xl justify-items-center mx-auto">
           {filteredCountries.map((country) => (
@@ -106,7 +100,6 @@ export default function App() {
         </div>
       )}
 
-      {/* Selected country details */}
       {selected && (
         <div className="mt-6 p-6 border rounded-2xl shadow-2xl bg-white w-full max-w-md text-center animate-fadeIn">
           <h2 className="text-3xl font-bold">{selected.name?.common}</h2>
@@ -129,7 +122,7 @@ export default function App() {
               setSelected(null);
               setWeather(null);
               setBestTravel(null);
-              setSearch(""); // Reset search
+              setSearch("");
             }}
           >
             Back to Search
@@ -137,7 +130,6 @@ export default function App() {
         </div>
       )}
 
-      {/* No results message */}
       {search && !selected && filteredCountries.length === 0 && (
         <p className="text-center mt-4 text-gray-500">No countries match your search 😢</p>
       )}
